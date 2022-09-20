@@ -5,10 +5,15 @@ const {engine } = require ('express-handlebars');
 const app = express()
 const port = 3000
 
+app.use(express.urlencoded({
+  extended : true
+}))
+app.use(express.json())
+
 // image 
 app.use(express.static(path.join(__dirname, 'public')))
 // http log
-app.use(morgan('combined'))
+// app.use(morgan('combined'))
 //  templet engine
 app.engine('hbs', engine({extname: '.hbs'}));
 
@@ -25,6 +30,10 @@ app.get('/news', (req, res) => {
 
 app.get('/search', (req, res) => {
   res.render("search")
+})
+app.post('/search', (req, res) => {
+  console.log(req.body)
+  res.send("")
 })
 
 app.listen(port, () => {
